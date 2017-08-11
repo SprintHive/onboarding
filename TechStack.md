@@ -22,3 +22,14 @@ terminate SSL, offer name based virtual hosting etc.
     aws_secret_access_key=<your key here>
     
     kops export kubecfg <CLUSTER_DOMAIN> --state s3://<KOPS_CLUSTER_CONFIG_BUCKET>
+    
+    ## Ingress
+    
+    # Configure DNS
+    Add a wildcard route53 entry as a CNAME of the AWS ELB that was created for the ingress gateway (i.e. Kong in the infrastructure namespace).
+    
+    # Create API in Kong for a service ingress
+    kubectl port-forward $(kubectl get po -o name | grep inggw-kong | sed 's/.*\///g') 8001
+    curl -X POST http://localhost:8001/apis -H 'Content-Type: application/json' -d '{"name": "<SERVICE_NAME>", "hosts": "<FULLY_QUALIFIED_INGRESS_HOSTNAME>", "upstream_url": "http://<SERVICE_NAME>"}'
+    curl -X POST http://localhost:8001/upstream -H 'Content-Type: application/json' -d '{"name": "<SERVICE_NAME>"}'
+    curl -X POST http://localhost:8001/upstreams/<SERVICE_NAME>/targets -H 'Content-Type: application/json' -d '{"target": "<SERVICE_IP>:<SERVICE_PORT>"}'
