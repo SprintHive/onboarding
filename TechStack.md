@@ -21,5 +21,4 @@ terminate SSL, offer name based virtual hosting etc.
     aws_access_key_id=<your id here>
     aws_secret_access_key=<your key here>
     
-    kops export kubecfg dev.wesbank.ekyc.co.za --state s3://wesbank-kyc-clusterconfig
-       
+    kops export kubecfg <CLUSTER_DOMAIN> --state s3://<KOPS_CLUSTER_CONFIG_BUCKET>
