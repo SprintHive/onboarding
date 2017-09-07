@@ -8,6 +8,15 @@ kubectrl
 [ingress](https://github.com/kubernetes/ingress) Provides services with externally-reachable urls, load balancing, 
 terminate SSL, offer name based virtual hosting etc.          
 
+## View logs of a pod
+
+    kubctrl log -f <podName>
+
+## Useful aliases for working with kubernetes
+
+    # Spin up a box which allows you to run curl to test things from within the cluster      
+    alias busybox='kubectl delete deploy/busybox; kubectl run -i --rm --tty busybox --image=radial/busyboxplus:curl -- sh'
+
 ## Installing and configuring kops
     
     # Installing OSX using brew
@@ -31,5 +40,19 @@ terminate SSL, offer name based virtual hosting etc.
     # Create API in Kong for a service ingress
     kubectl port-forward $(kubectl get po -o name | grep inggw-kong | sed 's/.*\///g') 8001
     curl -X POST http://localhost:8001/apis -H 'Content-Type: application/json' -d '{"name": "<SERVICE_NAME>", "hosts": "<FULLY_QUALIFIED_INGRESS_HOSTNAME>", "upstream_url": "http://<SERVICE_NAME>"}'
-    curl -X POST http://localhost:8001/upstream -H 'Content-Type: application/json' -d '{"name": "<SERVICE_NAME>"}'
+    curl -X POST http://localhost:8001/upstreams -H 'Content-Type: application/json' -d '{"name": "<SERVICE_NAME>"}'
     curl -X POST http://localhost:8001/upstreams/<SERVICE_NAME>/targets -H 'Content-Type: application/json' -d '{"target": "<SERVICE_IP>:<SERVICE_PORT>"}'
+    
+    
+    # Get a password from a secret
+    kubectl get secret -n infra metricviz-grafana -o yaml
+    
+    # Decode the password
+    echo -n "<USERNAME>" | base64 -D
+    echo -n "<PASSWORD>" | base64 -D
+    
+## Installing Elasticsearch 
+
+    Steps to install Elasticsearch into
+    
+    https://github.com/elastic/rally 

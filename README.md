@@ -1,17 +1,19 @@
 # Onboarding
 
-The on boarding process at SprintHive
+Welcome to the on boarding process at SprintHive.
 
 # The employee input forms
 
-
+Fill in the employee forms and send them to Karen 
+along with a copy of your id document. See the forms directory for pdfs.
 
 # Account Setup
 
 Google account  
 Trello  
 Slack  
-Github  
+Github 
+Nuclino 
 
 ## AWS SprintHive
 
